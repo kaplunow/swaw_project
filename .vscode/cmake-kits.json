@@ -1,0 +1,6 @@
+[
+    {
+        "name": "Nucleo-F103",
+        "toolchainFile": "${workspaceFolder}/bsp/nucleo-f103rb/toolchain.cmake"
+    }
+]
