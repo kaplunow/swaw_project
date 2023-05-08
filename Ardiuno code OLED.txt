@@ -1,0 +1,51 @@
+#include <Adafruit_GFX.h>      // Include the Adafruit Graphics Library
+#include <Adafruit_SSD1306.h>  // Include the Adafruit OLED Display Library
+
+#define SCREEN_WIDTH 128       // OLED display width, in pixels
+#define SCREEN_HEIGHT 64       // OLED display height, in pixels
+
+// Define the pins for the IR sensor and OLED display
+#define IR_PIN 2
+#define OLED_RESET 4           // Reset pin # (or -1 if sharing Arduino reset pin)
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET); // Initialize the OLED display
+
+volatile unsigned long pulseCount; // Variable for counting pulses from the IR sensor
+unsigned long lastPulseTime;       // Time of last pulse from the IR sensor
+float mph;                         // Variable for calculating MPH
+
+void IRInterrupt() {              // Interrupt routine for IR sensor
+  pulseCount++;
+}
+
+void setup() {
+  pinMode(IR_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(IR_PIN), IRInterrupt, RISING); // Attach interrupt to IR sensor
+  Serial.begin(9600);
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // Initialize the OLED display
+  display.clearDisplay();                    // Clear the display buffer
+  display.setTextColor(WHITE);                // Set text color to white
+  display.setTextSize(2);                     // Set text size to 2x
+  display.setCursor(0, 0);                    // Set cursor to top-left corner of display
+  display.println("SPEEDOMETER");             // Print title
+  display.display();                          // Display the title
+  delay(2000);                                // Delay for 2 seconds
+  lastPulseTime = micros();                    // Initialize last pulse time
+}
+
+void loop() {
+  unsigned long currentMicros = micros(); // Get current time
+  unsigned long elapsedTime = currentMicros - lastPulseTime; // Calculate time since last pulse
+  if (elapsedTime > 10000) {              // Only update speed if elapsed time is greater than 10ms (10000us)
+    detachInterrupt(digitalPinToInterrupt(IR_PIN)); // Detach interrupt to avoid conflicts
+    mph = pulseCount * 0.011612903; // Calculate MPH based on number of pulses received (0.011612903 is a calibration factor for my specific sensor)
+    pulseCount = 0;                // Reset pulse count
+    lastPulseTime = currentMicros; // Update last pulse time
+    attachInterrupt(digitalPinToInterrupt(IR_PIN), IRInterrupt, RISING); // Reattach interrupt
+    display.clearDisplay();        // Clear the display buffer
+    display.setCursor(0, 0);      // Set cursor to top-left corner of display
+    display.print(mph, 1);        // Print MPH with 1 decimal place
+    display.print(" MPH");        // Print "MPH" after the speed
+    display.display();            // Display the speed
+  }
+}
