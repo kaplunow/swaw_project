@@ -11,6 +11,10 @@ namespace swaw::bsp {
      */
     void init() noexcept;
 
+    /**
+     * @brief Led blinking test function
+     */
+    void HelloWorld() noexcept;
 
 } // namespace swaw::bsp
 
