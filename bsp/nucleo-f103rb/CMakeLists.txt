@@ -1,5 +1,5 @@
 
-add_library(bsp src/bsp.cpp)
+add_library(bsp STATIC src/bsp.cpp)
 target_include_directories(bsp PUBLIC include)
 
 include(FetchContent)
@@ -18,4 +18,4 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(cubemx_cmake)
 cubemx_add_library(swaw)
-target_link_libraries(bsp PRIVATE swaw)
+target_link_libraries(bsp PUBLIC swaw)

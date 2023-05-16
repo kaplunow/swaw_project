@@ -7,7 +7,6 @@
 extern "C" void SystemClock_Config(void);
 
 
-
 namespace swaw::bsp {
 
 
@@ -22,15 +21,13 @@ namespace swaw::bsp {
         HAL_Delay(1000);
     }
 
-    // void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    //     if(GPIO_Pin == B1_Pin)
-    //         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    // }
 
 } // namespace swaw::bsp
 
-extern "C" void SysTick_Handler(void) {
-    HAL_IncTick();
+
+extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    if(GPIO_Pin == B1_Pin)
+        HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
 }
 
 extern "C" _ssize_t _write(int file, const void *ptr, size_t len) {
