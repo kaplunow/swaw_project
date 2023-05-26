@@ -5,7 +5,6 @@
 
 namespace swaw::bsp {
 
-
     /**
      * @brief Initializes platform
      */
@@ -16,6 +15,11 @@ namespace swaw::bsp {
      */
     void HelloWorld() noexcept;
 
+    int read_hall();
+
+    int tim_get_status();
+
+    void tim_clear_status();
 } // namespace swaw::bsp
 
 #endif
