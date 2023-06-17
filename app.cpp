@@ -10,12 +10,20 @@ int main() {
 
     bsp::init();
 
-    int raw_hall;
+    int hall, prev_hall = 0;
+    int periods = 0;
 
     while (1) {
         if (bsp::tim_get_status() == 1) {
-            raw_hall = bsp::read_hall();
-            printf("raw_hall = %d\n", raw_hall);
+            prev_hall = hall;
+            hall = bsp::read_hall();
+            if(bsp::detection_moment(hall,prev_hall)){
+                float velocity =bsp::calculate_velocity(periods,bsp::get_radius());
+                printf("radius = %f\n", bsp::get_radius());
+                periods = 0;
+            }else{
+                periods++;
+            }
             bsp::tim_clear_status();
         }
     }

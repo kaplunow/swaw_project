@@ -3,7 +3,7 @@
 all: build build/swaw_app.bin
 
 build:
-	cmake -DCMAKE_TOOLCHAIN_FILE:FILEPATH=/home/kaplunow/working/sem_8/swaw/projekt/git/bsp/nucleo-f103rb/toolchain.cmake -B build -G "Ninja"
+	cmake -DCMAKE_TOOLCHAIN_FILE:FILEPATH=/witek/Desktop/swaw_project/bsp/nucleo-f103rb/toolchain.cmake -B build -G "Ninja"
 	cmake --build build -t all
 
 build/swaw_app.bin: build build/swaw_app.elf

@@ -3,6 +3,13 @@
 
 #include <cstdint>
 
+#define HALL_SENSOR_VCC 3.3
+#define HALL_SENSOR_OFFSET 1.65
+#define DETECTION_TRESHOLD 40
+#define HALL_SENSOR_PERIOD 1000
+
+
+
 namespace swaw::bsp {
 
     /**
@@ -17,7 +24,13 @@ namespace swaw::bsp {
 
     int read_hall();
 
+    bool detection_moment(int,int);
+
+    float calculate_velocity(int,float);
+    
     int tim_get_status();
+
+    float get_radius();
 
     void tim_clear_status();
 } // namespace swaw::bsp
