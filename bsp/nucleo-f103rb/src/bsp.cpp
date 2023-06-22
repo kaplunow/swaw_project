@@ -52,15 +52,27 @@ namespace swaw::bsp {
     }
 
     bool detection_moment(int hall, int prev_hall){
-        if(hall > DETECTION_TRESHOLD && prev_hall < DETECTION_TRESHOLD){
+        if(hall > DETECTION_TRESHOLD && prev_hall < DETECTION_TRESHOLD) {
             return true;
         }else{
             return false;
         }
     }
 
+    bool detection_able_reset(int hall, bool able_to_detect){
+        if(hall < DETECTION_RESET_TRESHOLD){
+            return true;
+        }
+        else if (hall > DETECTION_TRESHOLD) {
+            return false;
+        }
+        else{
+            return able_to_detect;
+        }
+    }
+
     float calculate_velocity(int periods, float radius){
-        float velocity = 2.0 * 3.6 * (radius/100) /(periods * HALL_SENSOR_PERIOD);
+        float velocity = 2.0 * 3.14 * 3.6 * (radius/100.0) /(periods * HALL_SENSOR_PERIOD/1000);
         return velocity;
     }
 
@@ -76,7 +88,7 @@ extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
         radius--;
     }
-    
+    printf("radius = %.1f cm \n", radius);
 }
 
 extern "C" void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {

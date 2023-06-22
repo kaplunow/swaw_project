@@ -5,8 +5,9 @@
 
 #define HALL_SENSOR_VCC 3.3
 #define HALL_SENSOR_OFFSET 1.65
-#define DETECTION_TRESHOLD 40
-#define HALL_SENSOR_PERIOD 1000
+#define DETECTION_TRESHOLD 150
+#define DETECTION_RESET_TRESHOLD 50
+#define HALL_SENSOR_PERIOD 1.0
 
 
 
@@ -25,6 +26,8 @@ namespace swaw::bsp {
     int read_hall();
 
     bool detection_moment(int,int);
+
+    bool detection_able_reset(int,bool);
 
     float calculate_velocity(int,float);
     
