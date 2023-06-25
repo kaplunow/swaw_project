@@ -80,11 +80,11 @@ namespace swaw::bsp {
 
 
 extern "C" void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    if(GPIO_Pin == B1_Pin){
+    if(GPIO_Pin == BUTTON_PLUS_Pin){
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
         radius++;
     }
-    else if(GPIO_Pin == Button_on_board_Pin){
+    else if(GPIO_Pin == BUTTON_MINUS_Pin){
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
         radius--;
     }

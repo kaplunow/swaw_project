@@ -22,11 +22,13 @@ int main() {
                 if(bsp::detection_moment(hall,prev_hall)){
                     float velocity =bsp::calculate_velocity(periods,bsp::get_radius());
                     printf("%.2f km/h \n", velocity);
+                    
                     periods = 0;
                 }else{
                     periods++;
                 }
             };
+            //printf("%d HALL \n", hall);
             able_to_detect = bsp::detection_able_reset(hall,able_to_detect);     
             bsp::tim_clear_status();
         }
