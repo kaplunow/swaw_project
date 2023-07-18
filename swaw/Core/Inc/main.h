@@ -66,6 +66,12 @@ void Error_Handler(void);
 #define USART_RX_GPIO_Port GPIOA
 #define LD2_Pin GPIO_PIN_5
 #define LD2_GPIO_Port GPIOA
+#define BUTTON_PLUS_Pin GPIO_PIN_1
+#define BUTTON_PLUS_GPIO_Port GPIOB
+#define BUTTON_PLUS_EXTI_IRQn EXTI1_IRQn
+#define BUTTON_MINUS_Pin GPIO_PIN_2
+#define BUTTON_MINUS_GPIO_Port GPIOB
+#define BUTTON_MINUS_EXTI_IRQn EXTI2_IRQn
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14

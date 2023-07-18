@@ -27,6 +27,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "ssd1306_tests.h"
+#include "bsp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,13 +95,39 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  ssd1306_TestAll();
+init();
+
+int hall, prev_hall = 0;
+int periods = 0;
+int able_to_detect = 1;
+float p = 1.0;
+
+  //ssd1306_TestAll();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  if (tim_get_status() == 1) {
+	              prev_hall = hall;
+	              hall = read_hall();
+	              //printf("HALL : %d\n", able_to_detect);
+	              if(able_to_detect){
+	                  if(detection_moment(hall,prev_hall)){
+	                      float velocity =calculate_velocity(periods,get_radius());
+	                      //printf("%.2f km/h \n", velocity);
+	                      display(velocity);
+	                      periods = 0;
+	                  }else{
+	                      periods++;
+	                      //display(66.6);
+	                  }
+	              };
+	              //printf("%d HALL \n", hall);
+	              able_to_detect = detection_able_reset(hall,able_to_detect);
+	              tim_clear_status();
+	          }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

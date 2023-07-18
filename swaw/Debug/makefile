@@ -60,8 +60,8 @@ all: main-build
 main-build: swaw.elf secondary-outputs
 
 # Tool invocations
-swaw.elf swaw.map: $(OBJS) $(USER_OBJS) /mnt/windows/materialy/studia/semestry/8/swaw/projekt/swaw_project/swaw/STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "swaw.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"/mnt/windows/materialy/studia/semestry/8/swaw/projekt/swaw_project/swaw/STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="swaw.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+swaw.elf swaw.map: $(OBJS) $(USER_OBJS) C:\Users\witek\Desktop\swaw_p\swaw_project\swaw\STM32F103RBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "swaw.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"C:\Users\witek\Desktop\swaw_p\swaw_project\swaw\STM32F103RBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="swaw.map" -Wl,--gc-sections -static -u_printf_float --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

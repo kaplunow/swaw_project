@@ -1,0 +1,12 @@
+../Core/Src/bsp.c:20:6:init	8	static
+../Core/Src/bsp.c:32:6:HelloWorld	8	static
+../Core/Src/bsp.c:37:5:tim_get_status	4	static
+../Core/Src/bsp.c:41:7:get_radius	4	static
+../Core/Src/bsp.c:45:6:tim_clear_status	4	static
+../Core/Src/bsp.c:49:5:read_hall	16	static
+../Core/Src/bsp.c:58:5:detection_moment	16	static
+../Core/Src/bsp.c:66:5:detection_able_reset	16	static
+../Core/Src/bsp.c:78:7:calculate_velocity	32	static
+../Core/Src/bsp.c:83:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/bsp.c:94:7:HAL_TIM_PeriodElapsedCallback	16	static
+../Core/Src/bsp.c:99:7:display	32	static
