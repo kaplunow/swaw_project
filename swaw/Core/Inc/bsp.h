@@ -28,6 +28,10 @@ float calculate_velocity(int,float);
 
 int tim_get_status();
 
+void clear_radius_status();
+
+int get_radius_status();
+
 float get_radius();
 
 void tim_clear_status();

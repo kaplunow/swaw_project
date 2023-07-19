@@ -15,6 +15,7 @@ extern ADC_HandleTypeDef hadc1;
 void SystemClock_Config(void);
 
 int tim_status;
+int radius_status;
 volatile float radius;
 
 void init(){
@@ -27,6 +28,7 @@ void init(){
 	HAL_TIM_Base_Start_IT(&htim1);
 	ssd1306_Init();
 	radius = 32;
+	radius_status = 0;
 }
 
 void HelloWorld() {
@@ -40,6 +42,14 @@ int tim_get_status() {
 
 float get_radius(){
 	return radius;
+}
+
+void clear_radius_status(){
+	radius_status = 0;
+}
+
+int get_radius_status(){
+	return radius_status;
 }
 
 void tim_clear_status() {
@@ -83,12 +93,25 @@ float calculate_velocity(int periods, float radius){
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     if(GPIO_Pin == BUTTON_PLUS_Pin){
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-        radius++;
+        if(0 == radius_status){
+				radius++;
+				radius_status = 1;
+         }
+
     }
     else if(GPIO_Pin == BUTTON_MINUS_Pin){
         HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-        radius--;
+        if(0 == radius_status){
+        	radius--;
+        	radius_status = 1;
+        }
+
     }
+    //char str[20];
+//   	 sprintf(str,"%.1f cm",radius);
+//   	 ssd1306_SetCursor(2,21);
+//   	 ssd1306_WriteString(str, Font_11x18, White);
+//   	 ssd1306_UpdateScreen();
     //printf("radius = %.1f cm \n", radius);
 }
  void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim) {
@@ -97,13 +120,13 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 }
 
  void display (float velocity){
-	 char str[10];
+	 char str[20];
 	 ssd1306_Fill(Black);
 	 ssd1306_SetCursor(2,0);
 	 sprintf(str,"%.2f km/h",velocity);
 	 ssd1306_WriteString(str, Font_11x18, White);
 	 ssd1306_SetCursor(2,21);
-	 sprintf(str,"%.1f cm",radius);
+	 sprintf(str,"%.0f cm",get_radius());
 	 ssd1306_WriteString(str, Font_11x18, White);
 	 ssd1306_UpdateScreen();
  }
